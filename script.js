@@ -744,5 +744,49 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add pulse glow to buttons
     document.querySelectorAll('.quantum-button').forEach(button => {
         button.classList.add('pulse-glow');
+    });// Add smooth scrolling and animations
+document.addEventListener('DOMContentLoaded', function() {
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('nav a, .footer-links a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            }
+        });
     });
+    
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-in');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+    
+    // Observe sections for animations
+    document.querySelectorAll('section, .result-card, .step, .feature').forEach(element => {
+        observer.observe(element);
+    });
+    
+    // Add floating animation to key elements
+    setTimeout(() => {
+        document.querySelectorAll('.quantum-logo, .step-number, .result-card').forEach(element => {
+            element.classList.add('floating');
+        });
+    }, 500);
+});
 });
