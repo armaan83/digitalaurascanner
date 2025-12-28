@@ -4,7 +4,106 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     // DOM Elements
-    const websiteUrlInput = document.getElementById('website-url');
+    const websiteUrlInput = document.getElementById('website-url');// Add this function to your existing script.js file
+function initBackgroundParticles() {
+    const container = document.querySelector('.quantum-container');
+    if (!container) return;
+    
+    const canvas = document.createElement('canvas');
+    canvas.id = 'particle-canvas';
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.zIndex = '-1';
+    canvas.style.pointerEvents = 'none';
+    
+    container.appendChild(canvas);
+    
+    const ctx = canvas.getContext('2d');
+    let animationFrameId;
+    
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    
+    class Particle {
+        constructor() {
+            this.reset();
+        }
+        
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 3 + 1;
+            this.speedX = (Math.random() - 0.5) * 2;
+            this.speedY = (Math.random() - 0.5) * 2;
+            this.color = `rgba(108, 99, 255, ${Math.random() * 0.3 + 0.1})`;
+            this.life = Math.random() * 100 + 50;
+        }
+        
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            this.life--;
+            
+            if (this.life <= 0 || this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                this.reset();
+            }
+        }
+        
+        draw() {
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+    
+    const particles = [];
+    for (let i = 0; i < 100; i++) {
+        particles.push(new Particle());
+    }
+    
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        particles.forEach(particle => {
+            particle.update();
+            particle.draw();
+        });
+        
+        animationFrameId = requestAnimationFrame(animate);
+    }
+    
+    animate();
+    
+    return () => {
+        cancelAnimationFrame(animationFrameId);
+        canvas.remove();
+    };
+}
+
+// Call this function when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    initBackgroundParticles();
+    
+    // Add floating animation to quantum logo
+    const quantumLogo = document.querySelector('.quantum-logo');
+    if (quantumLogo) {
+        quantumLogo.classList.add('floating');
+    }
+    
+    // Add pulse glow to buttons
+    document.querySelectorAll('.quantum-button').forEach(button => {
+        button.classList.add('pulse-glow');
+    });
+});
     const scanWebsiteBtn = document.getElementById('scan-website');
     const dropZone = document.getElementById('drop-zone');
     const imageUpload = document.getElementById('image-upload');
@@ -546,4 +645,104 @@ https://yourusername.github.io/digital-aura-scanner
 
     console.log('Digital Aura Scanner initialized successfully!');
     console.log('✨ Ready to reveal digital energy patterns! ✨');
+});
+// Add this function to your existing script.js file
+function initBackgroundParticles() {
+    const container = document.querySelector('.quantum-container');
+    if (!container) return;
+    
+    const canvas = document.createElement('canvas');
+    canvas.id = 'particle-canvas';
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.zIndex = '-1';
+    canvas.style.pointerEvents = 'none';
+    
+    container.appendChild(canvas);
+    
+    const ctx = canvas.getContext('2d');
+    let animationFrameId;
+    
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    
+    class Particle {
+        constructor() {
+            this.reset();
+        }
+        
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 3 + 1;
+            this.speedX = (Math.random() - 0.5) * 2;
+            this.speedY = (Math.random() - 0.5) * 2;
+            this.color = `rgba(108, 99, 255, ${Math.random() * 0.3 + 0.1})`;
+            this.life = Math.random() * 100 + 50;
+        }
+        
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            this.life--;
+            
+            if (this.life <= 0 || this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                this.reset();
+            }
+        }
+        
+        draw() {
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+    
+    const particles = [];
+    for (let i = 0; i < 100; i++) {
+        particles.push(new Particle());
+    }
+    
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        particles.forEach(particle => {
+            particle.update();
+            particle.draw();
+        });
+        
+        animationFrameId = requestAnimationFrame(animate);
+    }
+    
+    animate();
+    
+    return () => {
+        cancelAnimationFrame(animationFrameId);
+        canvas.remove();
+    };
+}
+
+// Call this function when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    initBackgroundParticles();
+    
+    // Add floating animation to quantum logo
+    const quantumLogo = document.querySelector('.quantum-logo');
+    if (quantumLogo) {
+        quantumLogo.classList.add('floating');
+    }
+    
+    // Add pulse glow to buttons
+    document.querySelectorAll('.quantum-button').forEach(button => {
+        button.classList.add('pulse-glow');
+    });
 });
